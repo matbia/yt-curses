@@ -19,5 +19,5 @@ git clone https://github.com/matbia/yt-curses ~/yt-curses
 ```
 (Optional) add an alias to your .bash_profile (or .zprofile etc.) for easier access:
 ```
-alias yt-curses='~/main.py'
+alias yt-curses='~/yt-curses/main.py'
 ```
