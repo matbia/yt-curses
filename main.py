@@ -9,8 +9,8 @@ def load_subscriptions_videos():
     videos = []
     for x in range(0, len(subscriptions)):
         videos += get_videos_from_channel(subscriptions[x]) #Get videos from channel and append to list
-    videos.sort(key=lambda v: v.upload_date) #Sort videos by upload date
-    return videos[::-1] #Reverse list
+    videos.sort(key=lambda v: v.upload_date, reverse = True) #Sort videos by upload date descending
+    return videos
 
 def main(stdscr):
     k = 0 #Last pressed key
@@ -74,6 +74,7 @@ def main(stdscr):
         elif k == 269:
             mode = 'Channel'
             videos = get_videos_from_channel(videos[index].channel_id)
+            videos.sort(key=lambda v: v.upload_date, reverse = True) #Sort videos by upload date descending
             index = 0
         elif k == 270:
             if not toggle_subscription(videos[index].channel_id):

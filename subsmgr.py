@@ -5,19 +5,19 @@ file_path = os.path.join(os.path.dirname(__file__), 'subscriptions')
 #Returns subscribed channels IDs as a list of strings
 def get_subscribed_channels():
     try:
-        subscriptions_file = open(file_path, 'r')
+        subs_file = open(file_path, 'r')
     except IOError:
-        subscriptions_file = open(file_path, 'w') #Create new file if there isn't one
-        return [] #Return empty list
+        subs_file = open(file_path, 'w') #Create new file if there isn't one
+        return []
 
     #File to string list
-    subscriptions = []
-    for line in subscriptions_file:
-        subscriptions.append(line)
-    subscriptions_file.close()
-    return subscriptions
+    subs = []
+    for line in subs_file:
+        subs.append(line)
+    subs_file.close()
+    return subs
 
-#Returns true if subscriptions file contains channel_id
+#Returns true if subscriptions file contains channel_id, otherwise returns false
 def is_subscribed(channel_id):
     return channel_id in open(file_path).read()
 

@@ -15,7 +15,7 @@ class Video:
 def send_request(url):
     return json.loads(urllib.request.urlopen(urllib.request.Request(url, headers={ 'User-Agent': '' })).read()) #Empty user agent to prevent 403 error
 
-#Parse JSON into object list
+#Parses JSON into object list
 def json_to_videos_list(data):
     videos = []
     for i in range(0, len(data['items'])):
