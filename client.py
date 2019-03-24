@@ -20,7 +20,7 @@ def json_to_videos_list(data):
     videos = []
     for i in range(0, len(data['items'])):
         item = data['items'][i]
-        videos.append(Video(item['id']['videoId'], item['snippet']['title'], item['snippet']['channelId'], item['snippet']['channelTitle'], parse(item['snippet']['publishedAt'])))
+        videos.append(Video(item['id']['videoId'], item['snippet']['title'], item['snippet']['channelId'], item['snippet']['channelTitle'], parse(item['snippet']['publishedAt']).date()))
     return videos
 
 def get_videos_from_channel(channel_id):
