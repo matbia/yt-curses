@@ -15,11 +15,7 @@ Requires youtube-dl and mpv.
 ## Installing
 Clone this repository into the desired location (ex. homedir):
 ```
-git clone https://github.com/matbia/yt-curses ~/yt-curses && cd ~/yt-curses
-```
-Give main.py file permission to execute:
-```
-chmod +x main.py
+git clone https://github.com/matbia/yt-curses ~/yt-curses
 ```
 (Optional) add an alias to your .bash_profile (or .zprofile etc.) for easier access:
 ```
