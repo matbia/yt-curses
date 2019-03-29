@@ -97,7 +97,10 @@ def main(stdscr):
 
         #Render videos
         for i in range(0, len(videos)):
-            col_l.addstr(i, 0, videos[i].title)
+            try:
+                col_l.addstr(i, 0, videos[i].title)
+            except:
+                pass
 
         #Print video info
         try:
