@@ -48,20 +48,27 @@ def main(stdscr):
         elif k == 10:
             os.system('nohup mpv https://youtu.be/' + videos[index].id + ' > /dev/null &')
             col_r.attron(curses.color_pair(2))
-            col_r.addstr(4, 0, 'Now playing...')
+            col_r.addstr(4, 0, 'Now playing')
             col_r.attroff(curses.color_pair(2))
         elif k == 265:
             mode = 'Subscriptions'
             index = 0
+            stdscr.addstr(0, 0, 'Loading subscriptions...')
+            stdscr.refresh()
             videos = load_subscriptions_videos()
         elif k == 266:
             mode = 'Search'
             index = 0
-            curses.echo()
             stdscr.addstr(0, 0, 'Enter search query:')
-            videos = search_videos(stdscr.getstr(1,0, h_w))[::-1]
+            curses.echo()
+            query = stdscr.getstr(1,0, h_w)
             curses.noecho()
+            stdscr.addstr(0, 0, 'Loading videos...  ')
+            stdscr.refresh()
+            videos = search_videos(query)[::-1]
         elif k == 267:
+            col_r.addstr(4, 0, 'Loading video info...')
+            col_r.refresh(4, 0, 4, h_w, h - 2, w)
             info_str = get_video_info(videos[index].id)
             try:
                 col_r.addstr(4, 0, info_str)
@@ -69,10 +76,14 @@ def main(stdscr):
                 pass
         elif k == 268:
             mode = 'Related'
-            videos = get_related_videos(videos[index].id)
             index = 0
+            stdscr.addstr(0, 0, 'Loading related videos...')
+            stdscr.refresh()
+            videos = get_related_videos(videos[index].id)
         elif k == 269:
             mode = 'Channel'
+            stdscr.addstr(0, 0, 'Loading videos from channel...')
+            stdscr.refresh()
             videos = get_videos_from_channel(videos[index].channel_id)
             videos.sort(key=lambda v: v.upload_date, reverse = True) #Sort videos by upload date descending
             index = 0
