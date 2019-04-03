@@ -1,6 +1,6 @@
 import os
 
-file_path = os.path.join(os.path.dirname(__file__), 'subscriptions')
+file_path = os.path.join(os.path.dirname(__file__), 'subscriptions.txt')
 
 #Returns subscribed channels IDs as a list of strings
 def get_subscribed_channels():
