@@ -1,5 +1,6 @@
 import urllib.request, json
 from dateutil.parser import parse
+from html import unescape
 
 api_url = 'https://hooktube.com/api'
 
@@ -20,7 +21,7 @@ def json_to_videos_list(data):
     videos = []
     for i in range(0, len(data['items'])):
         item = data['items'][i]
-        videos.append(Video(item['id']['videoId'], item['snippet']['title'], item['snippet']['channelId'], item['snippet']['channelTitle'], parse(item['snippet']['publishedAt']).date()))
+        videos.append(Video(item['id']['videoId'], unescape(item['snippet']['title']), item['snippet']['channelId'], item['snippet']['channelTitle'], parse(item['snippet']['publishedAt']).date()))
     return videos
 
 def get_videos_from_channel(channel_id):
