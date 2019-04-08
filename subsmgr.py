@@ -37,5 +37,4 @@ def toggle_subscription(channel_id):
     with open(file_path, 'a') as file:
         #Append line
         file.write(channel_id + '\n')
-        f.close()
         return True

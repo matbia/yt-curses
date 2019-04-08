@@ -90,7 +90,7 @@ def main(stdscr):
         elif k == 270:
             if not toggle_subscription(videos[index].channel_id):
                 col_r.attron(curses.color_pair(1))
-                col_r.addstr(3, 1, 'Unsubscibed')
+                col_r.addstr(3, 0, 'Unsubscibed')
                 col_r.attroff(curses.color_pair(1))
 
         col_l = curses.newpad(len(videos) + 1, h_w) #Init left column
