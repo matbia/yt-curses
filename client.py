@@ -33,9 +33,9 @@ def search_videos(query):
 def get_related_videos(video_id):
     return json_to_videos_list(send_request(api_url + '?mode=related&id=' + video_id))[::-1]
 
+#Returns a string containing video's views, rating, and description
 def get_video_info(video_id):
     video_info = send_request(api_url + '?mode=video&id=' + video_id)['json_2']['items'][0]
     desc = video_info['snippet']['description']
     desc = (desc[:512] + '...') if len(desc) > 75 else desc #Trim description
-    info_str = 'Views: ' + video_info['statistics']['viewCount'] + '\nRating: ' + video_info['statistics']['likeCount'] + '/' + video_info['statistics']['dislikeCount'] + '\n\n' + desc
-    return info_str
+    return 'Views: ' + video_info['statistics']['viewCount'] + '\nRating: ' + video_info['statistics']['likeCount'] + '/' + video_info['statistics']['dislikeCount'] + '\n\n' + desc
