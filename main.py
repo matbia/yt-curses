@@ -2,15 +2,6 @@
 
 import curses
 from client import *
-from subsmgr import *
-
-def load_subscriptions_videos():
-    subscriptions = get_subscribed_channels()
-    videos = []
-    for x in range(0, len(subscriptions)):
-        videos += get_videos_from_channel(subscriptions[x]) #Get videos from channel and append to list
-    videos.sort(key=lambda v: v.upload_date, reverse = True) #Sort videos by upload date descending
-    return videos
 
 def main(stdscr):
     k = 0 #Last pressed key
@@ -21,9 +12,9 @@ def main(stdscr):
     curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
     curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
-
     curses.noecho()
     curses.curs_set(0) #Make cursor invisible
+
     stdscr.clear()
     stdscr.addstr(0, 0, 'Loading subscriptions...')
     stdscr.refresh()
@@ -69,9 +60,8 @@ def main(stdscr):
         elif k == 267:
             col_r.addstr(4, 0, 'Loading video info...')
             col_r.refresh(4, 0, 4, h_w, h - 2, w)
-            info_str = get_video_info(videos[index].id)
             try:
-                col_r.addstr(4, 0, info_str)
+                col_r.addstr(4, 0, get_video_info(videos[index].id))
             except:
                 pass
         elif k == 268:
@@ -85,7 +75,6 @@ def main(stdscr):
             stdscr.addstr(0, 0, 'Loading videos from channel...')
             stdscr.refresh()
             videos = get_videos_from_channel(videos[index].channel_id)
-            videos.sort(key=lambda v: v.upload_date, reverse = True) #Sort videos by upload date descending
             index = 0
         elif k == 270:
             if not toggle_subscription(videos[index].channel_id):
@@ -106,15 +95,12 @@ def main(stdscr):
         stdscr.addstr(h - 1, len(status_str), " " * (w - len(status_str) - 1)) #Fill up space
         stdscr.attroff(curses.color_pair(3))
 
-        #Render videos
-        for i in range(0, len(videos)):
-            try:
+        if videos:
+            #Render videos list
+            for i in range(0, len(videos)):
                 col_l.addstr(i, 0, videos[i].title)
-            except:
-                pass
 
-        #Print video info
-        try:
+            #Print video info
             stdscr.addstr(0, h_w - 1, '>')
             col_r.addstr(0, 0, videos[index].title)
             col_r.addstr(1, 0, videos[index].channel_name)
@@ -123,8 +109,10 @@ def main(stdscr):
                 col_r.attron(curses.color_pair(1))
                 col_r.addstr(3, 0, 'Subscribed')
                 col_r.attroff(curses.color_pair(1))
-        except:
+        else:
             col_l.addstr(0, 0, 'No results')
+
+
 
         # Refresh
         try:
