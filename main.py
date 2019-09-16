@@ -90,12 +90,13 @@ def main(stdscr):
 
         #Render status bar
         status_str = 'Videos: ' + str(len(videos)) + ' Current: ' + str(index + 1) + ' || Mode: ' + mode + " || Press 'h' for help "
-        stdscr.attron(curses.color_pair(3))
-        stdscr.addstr(h - 1, 0, status_str)
-        stdscr.addstr(h - 1, len(status_str), " " * (w - len(status_str) - 1)) #Fill up space
-        stdscr.attroff(curses.color_pair(3))
+        if len(status_str) < w:
+            stdscr.attron(curses.color_pair(3))
+            stdscr.addstr(h - 1, 0, status_str)
+            stdscr.addstr(h - 1, len(status_str), " " * (w - len(status_str) - 1)) #Fill up space
+            stdscr.attroff(curses.color_pair(3))
 
-        if videos:
+        if videos and w >= 32:
             #Render videos list
             for i in range(0, len(videos)):
                 col_l.addstr(i, 0, videos[i].title)
