@@ -48,11 +48,11 @@ def main(stdscr):
             stdscr.refresh()
             videos = load_subscriptions_videos()
         elif k == 266:
-            mode = 'Search'
             index = 0
             stdscr.addstr(0, 0, 'Enter search query:')
             curses.echo()
             query = stdscr.getstr(1,0, h_w)
+            mode = 'Search results for: ' + query.decode('utf-8')
             curses.noecho()
             stdscr.addstr(0, 0, 'Loading videos...  ')
             stdscr.refresh()
@@ -71,7 +71,7 @@ def main(stdscr):
             stdscr.refresh()
             videos = get_related_videos(videos[index].id)
         elif k == 269:
-            mode = 'Channel'
+            mode = 'Channel: ' + videos[index].channel_name
             stdscr.addstr(0, 0, 'Loading videos from channel...')
             stdscr.refresh()
             videos = get_videos_from_channel(videos[index].channel_id)
@@ -89,7 +89,7 @@ def main(stdscr):
             stdscr.addstr(y, h_w - 1, '|')
 
         #Render status bar
-        status_str = 'Videos: ' + str(len(videos)) + ' Current: ' + str(index + 1) + ' || Mode: ' + mode + " || Press 'h' for help "
+        status_str = 'Videos: ' + str(len(videos)) + ' Current: ' + str(index + 1) + ' || ' + mode + " || Press 'h' for help "
         if len(status_str) < w:
             stdscr.attron(curses.color_pair(3))
             stdscr.addstr(h - 1, 0, status_str)
