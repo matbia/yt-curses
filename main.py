@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import curses
+from subprocess import Popen
 from client import *
 
 def main(stdscr):
@@ -37,7 +38,8 @@ def main(stdscr):
             help_str = "'k/j' - Up/Down\n'Enter' - Play video\n'F1' - Load subscription videos\n'F2' - Search\n'F3' - Show video info\n'F4' - Load related videos\n'F5' - More videos from this channel\n'F6' - Subscribe\n'h' - Help\n'q' - Quit"
             col_r.addstr(5, 0, help_str)
         elif k == ord('\n'):
-            os.system('nohup mpv --msg-level=all=warn,ao/alsa=error https://youtu.be/' + videos[index].id + ' > ' + path + '/mpv.log &')
+            with open('mpv.log', 'a') as logfile:
+                Popen(['mpv', 'https://youtu.be/' + videos[index].id, '--msg-level=all=warn,ao/alsa=error'], stdout=logfile, stderr=logfile)
             col_r.attron(curses.color_pair(2))
             col_r.addstr(4, 0, 'Now playing')
             col_r.attroff(curses.color_pair(2))
