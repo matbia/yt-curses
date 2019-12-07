@@ -36,18 +36,18 @@ def main(stdscr):
         elif k == ord('h'):
             help_str = "'k/j' - Up/Down\n'Enter' - Play video\n'F1' - Load subscription videos\n'F2' - Search\n'F3' - Show video info\n'F4' - Load related videos\n'F5' - More videos from this channel\n'F6' - Subscribe\n'h' - Help\n'q' - Quit"
             col_r.addstr(5, 0, help_str)
-        elif k == 10:
+        elif k == ord('\n'):
             os.system('nohup mpv --msg-level=all=warn,ao/alsa=error https://youtu.be/' + videos[index].id + ' > ' + path + '/mpv.log &')
             col_r.attron(curses.color_pair(2))
             col_r.addstr(4, 0, 'Now playing')
             col_r.attroff(curses.color_pair(2))
-        elif k == 265:
+        elif k == curses.KEY_F1:
             mode = 'Subscriptions'
             index = 0
             stdscr.addstr(0, 0, 'Loading subscriptions...')
             stdscr.refresh()
             videos = load_subscriptions_videos()
-        elif k == 266:
+        elif k == curses.KEY_F2:
             index = 0
             stdscr.addstr(0, 0, 'Enter search query:')
             curses.echo()
@@ -57,26 +57,26 @@ def main(stdscr):
             stdscr.addstr(0, 0, 'Loading videos...  ')
             stdscr.refresh()
             videos = search_videos(query)[::-1]
-        elif k == 267:
+        elif k == curses.KEY_F3:
             col_r.addstr(4, 0, 'Loading video info...')
             col_r.refresh(4, 0, 4, h_w, h - 2, w)
             try:
                 col_r.addstr(4, 0, get_video_info(videos[index].id))
             except:
                 pass
-        elif k == 268:
+        elif k == curses.KEY_F4:
             mode = 'Related'
             index = 0
             stdscr.addstr(0, 0, 'Loading related videos...')
             stdscr.refresh()
             videos = get_related_videos(videos[index].id)
-        elif k == 269:
+        elif k == curses.KEY_F5:
             mode = 'Channel: ' + videos[index].channel_name
             stdscr.addstr(0, 0, 'Loading videos from channel...')
             stdscr.refresh()
             videos = get_videos_from_channel(videos[index].channel_id)
             index = 0
-        elif k == 270:
+        elif k == curses.KEY_F6:
             if not toggle_subscription(videos[index].channel_id):
                 col_r.attron(curses.color_pair(1))
                 col_r.addstr(3, 0, 'Unsubscibed')
