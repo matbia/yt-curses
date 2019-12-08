@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import curses
-from subprocess import Popen
+from subprocess import Popen, PIPE
 from client import *
+from player import *
 
 def main(stdscr):
     k = 0 #Last pressed key
@@ -35,13 +36,19 @@ def main(stdscr):
         elif (k == curses.KEY_UP or k == ord('k')) and index > 0:
             index -= 1
         elif k == ord('h'):
-            help_str = "'k/j' - Up/Down\n'Enter' - Play video\n'F1' - Load subscription videos\n'F2' - Search\n'F3' - Show video info\n'F4' - Load related videos\n'F5' - More videos from this channel\n'F6' - Subscribe\n'h' - Help\n'q' - Quit"
+            help_str = "'k/j' - Up/Down\n'Enter' - Play video\n'Space' - Play/stop audio only\n'F1' - Load subscription videos\n'F2' - Search\n'F3' - Show video info\n'F4' - Load related videos\n'F5' - More videos from this channel\n'F6' - Subscribe\n'h' - Help\n'q' - Quit"
             col_r.addstr(5, 0, help_str)
         elif k == ord('\n'):
-            with open('mpv.log', 'a') as logfile:
-                Popen(['mpv', 'https://youtu.be/' + videos[index].id, '--msg-level=all=warn,ao/alsa=error'], stdout=logfile, stderr=logfile)
+            play_video(videos[index].id)
             col_r.attron(curses.color_pair(2))
-            col_r.addstr(4, 0, 'Now playing')
+            col_r.addstr(4, 0, 'Now playing (video)')
+            col_r.attroff(curses.color_pair(2))
+        elif k == ord(' '):
+            col_r.attron(curses.color_pair(2))
+            if toggle_play_audio(videos[index].id):
+                col_r.addstr(4, 0, 'Now playing (audio)')
+            else:
+                col_r.addstr(4, 0, 'Stopped playing audio')
             col_r.attroff(curses.color_pair(2))
         elif k == curses.KEY_F1:
             mode = 'Subscriptions'
@@ -127,7 +134,6 @@ def main(stdscr):
 
         # Wait for next input
         k = stdscr.getch()
-
         stdscr.clear()
 
 curses.wrapper(main)
