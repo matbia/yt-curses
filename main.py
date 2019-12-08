@@ -41,14 +41,14 @@ def main(stdscr):
         elif k == ord('\n'):
             play_video(videos[index].id)
             col_r.attron(curses.color_pair(2))
-            col_r.addstr(4, 0, 'Now playing (video)')
+            col_r.addstr(5, 0, 'Now playing (video)')
             col_r.attroff(curses.color_pair(2))
         elif k == ord(' '):
             col_r.attron(curses.color_pair(2))
             if toggle_play_audio(videos[index].id):
-                col_r.addstr(4, 0, 'Now playing (audio)')
+                col_r.addstr(5, 0, 'Now playing (audio)')
             else:
-                col_r.addstr(4, 0, 'Stopped playing audio')
+                col_r.addstr(5, 0, 'Stopped playing audio')
             col_r.attroff(curses.color_pair(2))
         elif k == curses.KEY_F1:
             mode = 'Subscriptions'
@@ -67,10 +67,10 @@ def main(stdscr):
             stdscr.refresh()
             videos = search_videos(query)[::-1]
         elif k == curses.KEY_F3:
-            col_r.addstr(4, 0, 'Loading video info...')
-            col_r.refresh(4, 0, 4, h_w, h - 2, w)
+            col_r.addstr(5, 0, 'Loading video info...')
+            col_r.refresh(5, 0, 5, h_w, h - 2, w)
             try:
-                col_r.addstr(4, 0, get_video_info(videos[index].id))
+                col_r.addstr(5, 0, get_video_info(videos[index].id))
             except:
                 pass
         elif k == curses.KEY_F4:
@@ -88,7 +88,7 @@ def main(stdscr):
         elif k == curses.KEY_F6:
             if not toggle_subscription(videos[index].channel_id):
                 col_r.attron(curses.color_pair(1))
-                col_r.addstr(3, 0, 'Unsubscibed')
+                col_r.addstr(4, 0, 'Unsubscibed')
                 col_r.attroff(curses.color_pair(1))
 
         col_l = curses.newpad(len(videos) + 1, h_w) #Init left column
@@ -113,11 +113,11 @@ def main(stdscr):
             #Print video info
             stdscr.addstr(0, h_w - 1, '>')
             col_r.addstr(0, 0, videos[index].title)
-            col_r.addstr(1, 0, videos[index].channel_name)
-            col_r.addstr(2, 0, str(videos[index].upload_date))
+            col_r.addstr(2, 0, videos[index].channel_name)
+            col_r.addstr(3, 0, str(videos[index].upload_date))
             if is_subscribed(videos[index].channel_id):
                 col_r.attron(curses.color_pair(1))
-                col_r.addstr(3, 0, 'Subscribed')
+                col_r.addstr(4, 0, 'Subscribed')
                 col_r.attroff(curses.color_pair(1))
         else:
             col_l.addstr(0, 0, 'No results')
