@@ -49,4 +49,9 @@ def load_subscriptions_videos():
 def get_video_info(video_id):
     video_info = send_request(api_url + '?mode=video&id=' + video_id)['json_2']['items'][0]
     desc = video_info['snippet']['description']
-    return 'Views: ' + video_info['statistics']['viewCount'] + '\nRating: ' + video_info['statistics']['likeCount'] + '/' + video_info['statistics']['dislikeCount'] + '\n\n' + desc
+    view_count = video_info['statistics']['viewCount']
+    like_count = video_info['statistics']['likeCount']
+    dislike_count = video_info['statistics']['dislikeCount']
+    rating = '{0:.2f}'.format(int(like_count) / int(dislike_count))
+
+    return 'Views: ' + view_count + '\nRating: ' + like_count + '/' + dislike_count + ' (' + rating + ')\n\n' + desc
