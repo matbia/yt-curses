@@ -9,6 +9,7 @@ def main(stdscr):
     k = 0 #Last pressed key
     index = 0 #List index
     mode = 'Subscriptions'
+    song = None
 
     # Init colours
     curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
@@ -47,8 +48,10 @@ def main(stdscr):
             col_r.attron(curses.color_pair(2))
             if toggle_play_audio(videos[index].id):
                 col_r.addstr(5, 0, 'Now playing (audio)')
+                song = videos[index].title
             else:
                 col_r.addstr(5, 0, 'Stopped playing audio')
+                song = None
             col_r.attroff(curses.color_pair(2))
         elif k == curses.KEY_F1:
             mode = 'Subscriptions'
@@ -99,6 +102,8 @@ def main(stdscr):
 
         #Render status bar
         status_str = 'Videos: ' + str(len(videos)) + ' Current: ' + str(index + 1) + ' || ' + mode + " || Press 'h' for help "
+        if song is not None:
+            status_str += (' || Now playing: ' + song)[:w - len(status_str) - 1]
         if len(status_str) < w:
             stdscr.attron(curses.color_pair(3))
             stdscr.addstr(h - 1, 0, status_str)
