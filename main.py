@@ -140,5 +140,6 @@ def main(stdscr):
         # Wait for next input
         k = stdscr.getch()
         stdscr.clear()
+    cleanup()
 
 curses.wrapper(main)

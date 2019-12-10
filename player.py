@@ -20,3 +20,7 @@ def toggle_play_audio(id):
         mpv_no_video_proc.terminate()
         mpv_no_video_proc = None
         return False
+
+def cleanup():
+    if mpv_no_video_proc:
+        mpv_no_video_proc.terminate()
