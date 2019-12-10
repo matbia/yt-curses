@@ -12,14 +12,14 @@ def play_video(id):
 #Plays audio from video with given ID and returns true, or terminates exisiting mpv --no-video instance and returns false
 def toggle_play_audio(id):
     global mpv_no_video_proc
-    if not mpv_no_video_proc:
-        with open(mpv_log_path, 'a') as logfile:
-            mpv_no_video_proc = Popen(['mpv', 'https://youtu.be/' + id, '--no-video', '--msg-level=all=warn,ao/alsa=error'], stdout=logfile, stderr=logfile)
-        return True
-    else:
+    if mpv_no_video_proc:
         mpv_no_video_proc.terminate()
         mpv_no_video_proc = None
         return False
+    else:
+        with open(mpv_log_path, 'a') as logfile:
+            mpv_no_video_proc = Popen(['mpv', 'https://youtu.be/' + id, '--no-video', '--msg-level=all=warn,ao/alsa=error'], stdout=logfile, stderr=logfile)
+        return True
 
 def cleanup():
     if mpv_no_video_proc:
