@@ -26,6 +26,11 @@ def json_to_videos_list(data):
         videos.append(Video(i['videoId'], unescape(i['title']), i['authorId'], i['author'], datetime.fromtimestamp(int(i['published']))))
     return videos
 
+def json_to_recommended_videos_list(data):
+    videos = []
+    for i in data:
+        videos.append(Video(i['videoId'], unescape(i['title']), i['authorId'], i['author'], ''))
+    return videos
 
 def get_videos_from_channel(channel_id):
     return json_to_videos_list(send_request(api_url + 'channels/videos/' + channel_id + api_params))
@@ -33,8 +38,8 @@ def get_videos_from_channel(channel_id):
 def search_videos(query):
     return json_to_videos_list(send_request(api_url + 'search?' + api_params + '&q=' + urllib.parse.quote_plus(query)))[::-1]
 
-def get_related_videos(video_id):
-    return json_to_videos_list(send_request(api_url + '?mode=related&id=' + video_id))[::-1]
+def get_recommended_videos(video_id):
+    return json_to_recommended_videos_list(send_request(api_url + 'videos/' + video_id + '?fields=recommendedVideos')['recommendedVideos'])
 
 def load_subscriptions_videos():
     subscriptions = get_subscribed_channels()

@@ -81,7 +81,7 @@ def main(stdscr):
             index = 0
             stdscr.addstr(0, 0, 'Loading related videos...')
             stdscr.refresh()
-            videos = get_related_videos(videos[index].id)
+            videos = get_recommended_videos(videos[index].id)
         elif k == curses.KEY_F5:
             mode = 'Channel: ' + videos[index].channel_name
             stdscr.addstr(0, 0, 'Loading videos from channel...')
