@@ -1,6 +1,6 @@
 # yt-curses
 Simple YouTube client with ncurses interface.
-Uses HookTube API.
+Uses [Invidious](https://github.com/omarroth/invidious) API.
 
 ## Features
 * Subscriptions system
