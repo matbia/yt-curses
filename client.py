@@ -26,9 +26,9 @@ def json_to_videos_list(data):
         videos.append(Video(i['videoId'], unescape(i['title']), i['authorId'], i['author'], datetime.fromtimestamp(int(i['published']))))
     return videos
 
+
 def get_videos_from_channel(channel_id):
-    videos = json_to_videos_list(send_request(api_url + 'channels/videos/' + channel_id + api_params))
-    return videos
+    return json_to_videos_list(send_request(api_url + 'channels/videos/' + channel_id + api_params))
 
 def search_videos(query):
     return json_to_videos_list(send_request(api_url + 'search?' + api_params + '&q=' + urllib.parse.quote_plus(query)))[::-1]
