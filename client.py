@@ -4,7 +4,7 @@ from textwrap import TextWrapper
 from html import unescape
 from subsmgr import *
 
-api_url = 'https://invidious.snopyta.org/api/v1/'
+api_url = 'https://invidio.us/api/v1/'
 api_params = '?fields=videoId,title,author,authorId,published'
 
 class Video:
