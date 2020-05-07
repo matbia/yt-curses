@@ -42,10 +42,9 @@ def get_recommended_videos(video_id):
     return json_to_recommended_videos_list(send_request(api_url + 'videos/' + video_id + '?fields=recommendedVideos')['recommendedVideos'])
 
 def load_subscriptions_videos():
-    subscriptions = get_subscribed_channels()
     videos = []
-    for x in range(0, len(subscriptions)):
-        videos += get_videos_from_channel(subscriptions[x])
+    for s in get_subscribed_channels():
+        videos += get_videos_from_channel(s)
     videos.sort(key=lambda v: v.upload_date, reverse = True) #Sort videos by upload date descending
     return videos
 
