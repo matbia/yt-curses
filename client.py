@@ -1,16 +1,17 @@
 import urllib.request, json
-from datetime import datetime
+import datetime
 from textwrap import TextWrapper
 from html import unescape
 from subsmgr import *
 
 api_url = 'https://invidio.us/api/v1/'
-api_params = '?fields=videoId,title,author,authorId,published'
+api_params = '?fields=videoId,title,author,authorId,published,lengthSeconds'
 
 class Video:
-    def __init__(self, id, title, channel_id, channel_name, upload_date):
+    def __init__(self, id, title, length, channel_id, channel_name, upload_date):
         self.id = id
         self.title = title
+        self.length = length
         self.channel_id = channel_id
         self.channel_name = channel_name
         self.upload_date = upload_date
@@ -23,13 +24,13 @@ def send_request(url):
 def json_to_videos_list(data):
     videos = []
     for i in data:
-        videos.append(Video(i['videoId'], unescape(i['title']), i['authorId'], i['author'], datetime.fromtimestamp(int(i['published']))))
+        videos.append(Video(i['videoId'], unescape(i['title']), str(datetime.timedelta(seconds=i['lengthSeconds'])), i['authorId'], i['author'], datetime.datetime.fromtimestamp(int(i['published']))))
     return videos
 
 def json_to_recommended_videos_list(data):
     videos = []
     for i in data:
-        videos.append(Video(i['videoId'], unescape(i['title']), i['authorId'], i['author'], ''))
+        videos.append(Video(i['videoId'], unescape(i['title']), i['lengthSeconds'], i['authorId'], i['author'], ''))
     return videos
 
 def get_videos_from_channel(channel_id):

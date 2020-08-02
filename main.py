@@ -38,19 +38,19 @@ def main(stdscr):
             index -= 1
         elif k == ord('h'):
             help_str = "'k/j' - Up/Down\n'Enter' - Play video\n'Space' - Play/stop audio only\n'F1' - Load subscription videos\n'F2' - Search\n'F3' - Show video info\n'F4' - Load related videos\n'F5' - More videos from this channel\n'F6' - Subscribe\n'h' - Help\n'q' - Quit"
-            col_r.addstr(5, 0, help_str)
+            col_r.addstr(6, 0, help_str)
         elif k == ord('\n'):
             play_video(videos[index].id)
             col_r.attron(curses.color_pair(2))
-            col_r.addstr(5, 0, 'Now playing (video)')
+            col_r.addstr(6, 0, 'Now playing (video)')
             col_r.attroff(curses.color_pair(2))
         elif k == ord(' '):
             col_r.attron(curses.color_pair(2))
             if toggle_play_audio(videos[index].id):
-                col_r.addstr(5, 0, 'Now playing (audio)')
+                col_r.addstr(6, 0, 'Now playing (audio)')
                 song = videos[index].title
             else:
-                col_r.addstr(5, 0, 'Stopped playing audio')
+                col_r.addstr(6, 0, 'Stopped playing audio')
                 song = None
             col_r.attroff(curses.color_pair(2))
         elif k == curses.KEY_F1:
@@ -70,7 +70,7 @@ def main(stdscr):
             stdscr.refresh()
             videos = search_videos(query)[::-1]
         elif k == curses.KEY_F3:
-            col_r.addstr(5, 0, 'Loading video info...')
+            col_r.addstr(6, 0, 'Loading video info...')
             col_r.refresh(5, 0, 5, h_w, h - 2, w)
             try:
                 col_r.addstr(5, 0, get_video_info(videos[index].id))
@@ -91,7 +91,7 @@ def main(stdscr):
         elif k == curses.KEY_F6:
             if not toggle_subscription(videos[index].channel_id):
                 col_r.attron(curses.color_pair(1))
-                col_r.addstr(4, 0, 'Unsubscibed')
+                col_r.addstr(5, 0, 'Unsubscibed')
                 col_r.attroff(curses.color_pair(1))
 
         col_l = curses.newpad(len(videos) + 1, h_w) #Init left column
@@ -118,11 +118,12 @@ def main(stdscr):
             #Print video info
             stdscr.addstr(0, h_w - 1, '>')
             col_r.addstr(0, 0, videos[index].title)
-            col_r.addstr(2, 0, videos[index].channel_name)
-            col_r.addstr(3, 0, str(videos[index].upload_date))
+            col_r.addstr(2, 0, str(videos[index].length))
+            col_r.addstr(3, 0, videos[index].channel_name)
+            col_r.addstr(4, 0, str(videos[index].upload_date))
             if is_subscribed(videos[index].channel_id):
                 col_r.attron(curses.color_pair(1))
-                col_r.addstr(4, 0, 'Subscribed')
+                col_r.addstr(5, 0, 'Subscribed')
                 col_r.attroff(curses.color_pair(1))
         else:
             col_l.addstr(0, 0, 'No results')
