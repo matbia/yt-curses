@@ -117,10 +117,10 @@ def main(stdscr):
 
             #Print video info
             stdscr.addstr(0, h_w - 1, '>')
-            col_r.addstr(0, 0, videos[index].title)
-            col_r.addstr(2, 0, str(videos[index].length))
+            col_r.addstr(0, 0, videos[index].title, curses.A_BOLD)
+            col_r.addstr(2, 0, 'Length: ' + str(videos[index].length))
+            col_r.addstr(2, int(h_w / 2), 'Uploaded: ' + str(videos[index].upload_date))
             col_r.addstr(3, 0, videos[index].channel_name)
-            col_r.addstr(4, 0, str(videos[index].upload_date))
             if is_subscribed(videos[index].channel_id):
                 col_r.attron(curses.color_pair(1))
                 col_r.addstr(5, 0, 'Subscribed')
