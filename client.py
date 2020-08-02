@@ -4,8 +4,11 @@ from textwrap import TextWrapper
 from html import unescape
 from subsmgr import *
 
-api_url = 'https://invidio.us/api/v1/'
 api_params = '?fields=videoId,title,author,authorId,published,lengthSeconds'
+
+#Load API URL of selected Invidious instance
+with open('api.txt', 'r') as f:
+     api_url = unescape(f.readline()).rstrip()
 
 class Video:
     def __init__(self, id, title, length, channel_id, channel_name, upload_date):
