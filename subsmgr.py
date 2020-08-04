@@ -23,10 +23,11 @@ def toggle_subscription(channel_id):
         with open(subs_path) as f:
             lines = f.read().splitlines()
 
+        lines.remove(channel_id)
+
         with open(subs_path, 'w') as f:
-            for line in lines:
-                if line != channel_id:
-                    f.write(line + '\n')
+            if len(lines):
+                f.write('\n'.join(lines) + '\n')
         return False
 
     with open(subs_path, 'a') as file:
