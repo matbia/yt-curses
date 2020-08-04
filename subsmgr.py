@@ -4,7 +4,8 @@ subs_path = path.join(path.dirname(__file__), 'subscriptions.txt')
 
 #Create new subscriptions file if there isn't one yet
 if not path.exists(subs_path):
-    open(subs_path, 'w')
+    with open(subs_path, 'w') as f:
+        pass
 
 #Returns subscribed channels IDs as a list of strings
 def get_subscribed_channels():
