@@ -3,7 +3,6 @@
 import curses
 from subprocess import Popen, PIPE
 from client import *
-from player import *
 
 def main(stdscr):
     k = 0 #Last pressed key

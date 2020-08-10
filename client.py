@@ -2,12 +2,13 @@ import urllib.request, json, datetime, sys
 from textwrap import TextWrapper
 from html import unescape
 from subsmgr import *
+from player import *
 
 api_params = '?fields=videoId,title,author,authorId,published,lengthSeconds'
 
 #Load API URL of selected Invidious instance
 try:
-    with open('api.txt') as f:
+    with open(path.join(path.dirname(__file__), 'api.txt')) as f:
         api_url = unescape(f.readline()).rstrip()
 except FileNotFoundError:
     sys.exit('ERROR: api.txt not found')

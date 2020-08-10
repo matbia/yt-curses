@@ -1,1 +1,1 @@
-https://invidio.us/api/v1/
+https://invidious.snopyta.org/api/v1/
