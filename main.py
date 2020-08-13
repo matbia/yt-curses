@@ -70,9 +70,12 @@ def main(stdscr):
             videos = search_videos(query)[::-1]
         elif k == curses.KEY_F3:
             col_r.addstr(6, 0, 'Loading video info...')
-            col_r.refresh(5, 0, 5, h_w, h - 2, w)
+            col_r.refresh(6, 0, 5, h_w, h - 2, w)
+            info = get_video_info(videos[index].id)
+            col_r.addstr(4, int(h_w / 2), 'Rating: ' + str(info['likeCount']) + '/' + str(info['dislikeCount']))
+            col_r.addstr(4, 0, 'Views: ' + str(info['viewCount']))
             try:
-                col_r.addstr(5, 0, get_video_info(videos[index].id))
+                col_r.addstr(6, 0, info['description'])
             except:
                 pass
         elif k == curses.KEY_F4:

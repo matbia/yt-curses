@@ -52,12 +52,6 @@ def load_subscriptions_videos():
     videos.sort(key=lambda v: v.upload_date, reverse = True) #Sort videos by upload date descending
     return videos
 
-#Returns a string containing video's views, rating, and description
+#Returns JSON containing video's views, rating, and description
 def get_video_info(video_id):
-    video_info = send_request(api_url + 'videos/' + video_id + '?fields=description,viewCount,likeCount,dislikeCount')
-    desc = video_info['description']
-    view_count = video_info['viewCount']
-    like_count = video_info['likeCount']
-    dislike_count = video_info['dislikeCount']
-    rating = '{0:.2f}'.format(int(like_count) / int(dislike_count))
-    return 'Views: ' + view_count + '\nRating: ' + like_count + '/' + dislike_count + ' (' + rating + ')\n\n' + desc
+    return send_request(api_url + 'videos/' + video_id + '?fields=description,viewCount,likeCount,dislikeCount')
